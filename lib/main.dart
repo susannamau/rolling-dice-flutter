@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   return runApp(
@@ -19,7 +20,16 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
+class DicePage extends StatefulWidget {
+  const DicePage({super.key});
+
+  @override
+  State<DicePage> createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDieNumber = 1;
+  int rightDieNumber = 1;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -33,11 +43,14 @@ class DicePage extends StatelessWidget {
               ),
               onPressed: () {
                 // qui c'è quello che viene chiamato quando si preme il bottone
-                //print('Left button got pressed');
+                setState(() {
+                  leftDieNumber = Random().nextInt(6)+1;
+                  rightDieNumber = Random().nextInt(6)+1;
+                });
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset('images/dice1.png'),
+                child: Image.asset('images/dice$leftDieNumber.png'),
               ),
             ),
           ),
@@ -51,8 +64,12 @@ class DicePage extends StatelessWidget {
                 ),
                 onPressed: () {
                   //print('Right button got pressed');
+                  setState(() {
+                    leftDieNumber = Random().nextInt(6)+1;
+                    rightDieNumber = Random().nextInt(6)+1;
+                  });
                 },
-                child: Image.asset('images/dice2.png'),
+                child: Image.asset('images/dice$rightDieNumber.png'),
               ),
             ),
           ),
