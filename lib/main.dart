@@ -32,48 +32,66 @@ class _DicePageState extends State<DicePage> {
   int rightDieNumber = 1;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 20),
-              ),
-              onPressed: () {
-                // qui c'è quello che viene chiamato quando si preme il bottone
-                setState(() {
-                  leftDieNumber = Random().nextInt(6)+1;
-                  rightDieNumber = Random().nextInt(6)+1;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset('images/dice$leftDieNumber.png'),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+    return Scaffold(
+      backgroundColor: Colors.red,
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.white,
+        onPressed: () {
+          // qui c'è quello che viene chiamato quando si preme il bottone
+          setState(() {
+            leftDieNumber = Random().nextInt(6) + 1;
+            rightDieNumber = Random().nextInt(6) + 1;
+          });
+        },
+        label: Text(
+          'Tira i dadi!',
+          style: TextStyle(color: Colors.red),
+        ),
+      ),
+      body: Center(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
               child: TextButton(
                 style: TextButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
-                  //print('Right button got pressed');
+                  // qui c'è quello che viene chiamato quando si preme il bottone
                   setState(() {
-                    leftDieNumber = Random().nextInt(6)+1;
-                    rightDieNumber = Random().nextInt(6)+1;
+                    leftDieNumber = Random().nextInt(6) + 1;
                   });
                 },
-                child: Image.asset('images/dice$rightDieNumber.png'),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('images/dice$leftDieNumber.png'),
+                ),
               ),
             ),
-          ),
-        ],
+            Visibility(
+              visible: true,
+              child: Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () {
+                      //print('Right button got pressed');
+                      setState(() {
+                        rightDieNumber = Random().nextInt(6) + 1;
+                      });
+                    },
+                    child: Image.asset('images/dice$rightDieNumber.png'),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
