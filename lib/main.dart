@@ -30,6 +30,8 @@ class DicePage extends StatefulWidget {
 class _DicePageState extends State<DicePage> {
   int leftDieNumber = 1;
   int rightDieNumber = 1;
+  bool secondVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,55 +45,87 @@ class _DicePageState extends State<DicePage> {
             rightDieNumber = Random().nextInt(6) + 1;
           });
         },
-        label: Text(
+        label: const Text(
           'Tira i dadi!',
           style: TextStyle(color: Colors.red),
         ),
       ),
-      body: Center(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 20),
-                ),
-                onPressed: () {
-                  // qui c'è quello che viene chiamato quando si preme il bottone
-                  setState(() {
-                    leftDieNumber = Random().nextInt(6) + 1;
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('images/dice$leftDieNumber.png'),
-                ),
-              ),
-            ),
-            Visibility(
-              visible: true,
-              child: Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
                   child: TextButton(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
-                      //print('Right button got pressed');
+                      // qui c'è quello che viene chiamato quando si preme il bottone
                       setState(() {
-                        rightDieNumber = Random().nextInt(6) + 1;
+                        leftDieNumber = Random().nextInt(6) + 1;
                       });
                     },
-                    child: Image.asset('images/dice$rightDieNumber.png'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset('images/dice$leftDieNumber.png'),
+                    ),
                   ),
                 ),
-              ),
+                Visibility(
+                  visible: secondVisible,
+                  child: Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 20),
+                        ),
+                        onPressed: () {
+                          //print('Right button got pressed');
+                          setState(() {
+                            rightDieNumber = Random().nextInt(6) + 1;
+                          });
+                        },
+                        child: Image.asset('images/dice$rightDieNumber.png'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: Row(
+              children: [
+                const Text('1',
+                style: TextStyle(
+                  color: Colors.white,
+                ),),
+                Switch(
+                  value: secondVisible,
+                  activeColor: Colors.white,
+                  onChanged: (bool value) {
+                    // This is called when the user toggles the switch.
+                    setState(
+                      () {
+                        secondVisible = value;
+                      },
+                    );
+                  },
+                ),
+                const Text('2',
+                    style: TextStyle(
+                    color: Colors.white,
+                ),),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
